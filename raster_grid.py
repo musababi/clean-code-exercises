@@ -29,10 +29,14 @@ class RasterGrid:
         self._y1 = y1
         self._nx = nx
         self._ny = ny
-        self.nc = nx*ny
+        self._number_of_cells = nx*ny
         self.cells = [
             self.Cell(i, j) for i in range(nx) for j in range(ny)
         ]
+
+    @property
+    def number_of_cells(self):
+        return self._number_of_cells
 
     def c(self, cell: Cell) -> Tuple[float, float]:
         return (
@@ -65,10 +69,10 @@ def test_number_of_cells():
     y0 = 0.0
     dx = 1.0
     dy = 1.0
-    assert RasterGrid(x0, y0, dx, dy, 10, 10).nc == 100
-    assert RasterGrid(x0, y0, dx, dy, 10, 20).nc == 200
-    assert RasterGrid(x0, y0, dx, dy, 20, 10).nc == 200
-    assert RasterGrid(x0, y0, dx, dy, 20, 20).nc == 400
+    assert RasterGrid(x0, y0, dx, dy, 10, 10).number_of_cells == 100
+    assert RasterGrid(x0, y0, dx, dy, 10, 20).number_of_cells == 200
+    assert RasterGrid(x0, y0, dx, dy, 20, 10).number_of_cells == 200
+    assert RasterGrid(x0, y0, dx, dy, 20, 20).number_of_cells == 400
 
 
 def test_locate_cell():
@@ -102,7 +106,7 @@ def test_cell_center():
 def test_cell_iterator() -> None:
     grid = RasterGrid(0.0, 0.0, 2.0, 2.0, 2, 2)
     count = sum(1 for _ in grid.cells)
-    assert count == grid.nc
+    assert count == grid.number_of_cells
 
     cell_indices_without_duplicates = set(list(
         (cell._ix, cell._iy) for cell in grid.cells
