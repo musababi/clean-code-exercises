@@ -38,7 +38,7 @@ class RasterGrid:
     def number_of_cells(self):
         return self._number_of_cells
 
-    def c(self, cell: Cell) -> Tuple[float, float]:
+    def get_cell_center(self, cell: Cell) -> Tuple[float, float]:
         return (
             self._x0 + (float(cell._ix) + 0.5)*(self._x1 - self._x0)/self._nx,
             self._y0 + (float(cell._iy) + 0.5)*(self._y1 - self._y0)/self._ny
@@ -94,13 +94,13 @@ def test_locate_cell():
 def test_cell_center():
     grid = RasterGrid(0.0, 0.0, 2.0, 2.0, 2, 2)
     cell = grid.get_cell(0.5, 0.5)
-    assert abs(grid.c(cell)[0] - 0.5) < 1e-7 and abs(grid.c(cell)[1] - 0.5) < 1e-7
+    assert abs(grid.get_cell_center(cell)[0] - 0.5) < 1e-7 and abs(grid.get_cell_center(cell)[1] - 0.5) < 1e-7
     cell = grid.get_cell(1.5, 0.5)
-    assert abs(grid.c(cell)[0] - 1.5) < 1e-7 and abs(grid.c(cell)[1] - 0.5) < 1e-7
+    assert abs(grid.get_cell_center(cell)[0] - 1.5) < 1e-7 and abs(grid.get_cell_center(cell)[1] - 0.5) < 1e-7
     cell = grid.get_cell(0.5, 1.5)
-    assert abs(grid.c(cell)[0] - 0.5) < 1e-7 and abs(grid.c(cell)[1] - 1.5) < 1e-7
+    assert abs(grid.get_cell_center(cell)[0] - 0.5) < 1e-7 and abs(grid.get_cell_center(cell)[1] - 1.5) < 1e-7
     cell = grid.get_cell(1.5, 1.5)
-    assert abs(grid.c(cell)[0] - 1.5) < 1e-7 and abs(grid.c(cell)[1] - 1.5) < 1e-7
+    assert abs(grid.get_cell_center(cell)[0] - 1.5) < 1e-7 and abs(grid.get_cell_center(cell)[1] - 1.5) < 1e-7
 
 
 def test_cell_iterator() -> None:
