@@ -9,6 +9,21 @@
 from typing import Tuple
 from dataclasses import dataclass
 
+class Vector:
+    def __init__(self, x: float, y: float) -> None:
+        self.x = x
+        self.y = y
+
+    def add_vector(self, vector) -> Vector:
+        return Vector(self.x + vector.x, self.y + vector.y)
+
+class Point:
+    def __init__(self, x: float, y: float) -> None:
+        self.x = x
+        self.y = y
+    
+    def vector_to(self, point) -> Vector:
+        return Vector(point.x - self.x, point.y - self.y)
 
 class RasterGrid:
     @dataclass
