@@ -14,9 +14,6 @@ class Vector:
         self.x = x
         self.y = y
 
-    def add_vector(self, vector) -> Vector:
-        return Vector(self.x + vector.x, self.y + vector.y)
-
 class Point:
     def __init__(self, x: float, y: float) -> None:
         self.x = x
@@ -49,7 +46,7 @@ class RasterGrid:
     @property
     def cells(self) -> Iterable[Cell]:
         return (
-            self.Cell(i, j) for i in range(nx) for j in range(ny)
+            self.Cell(i, j) for i in range(self._nx) for j in range(self._ny)
         )
 
     @property
