@@ -6,7 +6,7 @@
 #     - clean up the test code where beneficial
 #     - make sure to put each individual change in a small, separate commit
 #     - take care that on each commit, all tests pass
-from typing import Tuple
+from typing import Tuple, Iterable
 from dataclasses import dataclass
 
 class Vector:
@@ -45,9 +45,12 @@ class RasterGrid:
         self._nx = nx
         self._ny = ny
         self._number_of_cells = nx*ny
-        self.cells = [
+
+    @property
+    def cells(self) -> Iterable[Cell]:
+        return (
             self.Cell(i, j) for i in range(nx) for j in range(ny)
-        ]
+        )
 
     @property
     def number_of_cells(self):
