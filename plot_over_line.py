@@ -8,6 +8,7 @@ from typing import Tuple, List
 from dataclasses import dataclass
 from math import nan, sqrt, sin, cos, pi
 from matplotlib.pyplot import plot, show, close
+from raster_grid import RasterGrid
 
 
 @dataclass
