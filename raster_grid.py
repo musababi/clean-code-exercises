@@ -13,8 +13,8 @@ from dataclasses import dataclass
 class RasterGrid:
     @dataclass
     class Cell:
-        _ix: int
-        _iy: int
+        index_x: int
+        index_y: int
 
     def __init__(self,
                  x0: float,
@@ -39,8 +39,8 @@ class RasterGrid:
         return self._number_of_cells
 
     def get_cell_center(self, cell: Cell) -> Tuple[float, float]:
-        center_x = self._x0 + (float(cell._ix) + 0.5)*(self._x1 - self._x0)/self._nx
-        center_y = self._y0 + (float(cell._iy) + 0.5)*(self._y1 - self._y0)/self._ny
+        center_x = self._x0 + (float(cell.index_x) + 0.5)*(self._x1 - self._x0)/self._nx
+        center_y = self._y0 + (float(cell.index_y) + 0.5)*(self._y1 - self._y0)/self._ny
         return (
             center_x,
             center_y
@@ -80,17 +80,17 @@ def test_number_of_cells():
 def test_locate_cell():
     grid = RasterGrid(0.0, 0.0, 2.0, 2.0, 2, 2)
     cell = grid.get_cell(0, 0)
-    assert cell._ix == 0 and cell._iy == 0
+    assert cell.index_x == 0 and cell.index_y == 0
     cell = grid.get_cell(1, 1)
-    assert cell._ix == 1 and cell._iy == 1
+    assert cell.index_x == 1 and cell.index_y == 1
     cell = grid.get_cell(0.5, 0.5)
-    assert cell._ix == 0 and cell._iy == 0
+    assert cell.index_x == 0 and cell.index_y == 0
     cell = grid.get_cell(1.5, 0.5)
-    assert cell._ix == 1 and cell._iy == 0
+    assert cell.index_x == 1 and cell.index_y == 0
     cell = grid.get_cell(0.5, 1.5)
-    assert cell._ix == 0 and cell._iy == 1
+    assert cell.index_x == 0 and cell.index_y == 1
     cell = grid.get_cell(1.5, 1.5)
-    assert cell._ix == 1 and cell._iy == 1
+    assert cell.index_x == 1 and cell.index_y == 1
 
 
 def test_cell_center():
@@ -111,6 +111,6 @@ def test_cell_iterator() -> None:
     assert count == grid.number_of_cells
 
     cell_indices_without_duplicates = set(list(
-        (cell._ix, cell._iy) for cell in grid.cells
+        (cell.index_x, cell.index_y) for cell in grid.cells
     ))
     assert len(cell_indices_without_duplicates) == count
